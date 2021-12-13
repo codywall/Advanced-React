@@ -1,0 +1,60 @@
+<h2>Information for Remote Teaching/Learning</h2>
+<h3><a href="" class="href"></a>Student Technology Resources</h3>
+View common technology resources available to students.
+
+Faculty Technology Resources
+View common technology resources available to faculty.
+
+Popular Services
+Your account
+Claim a new CSUMB username, remember your password, and fix issues with your account.
+
+Software
+Get new software installed on your computer, or fix a software issue.
+
+Hardware & moving your computer
+Request a new computer, move one to a new location, or fix a physical problem with your device.
+
+Printing
+Fix your printer or a printer in a lab.
+
+Telephones & voicemail
+Manage your voicemail, get new phone numbers, and move phones.
+
+Internet
+Log into the campus network, and fix issues with getting online.
+
+Full list of services
+Browse the complete list of services and submit a ticket.
+<script>
+    fetch('https://updown.io/api/checks?api-key=ro-fsXi8NABYF7VyJYXiRku')
+        .then(response => {
+            return response.json()
+        })
+        .then(status => {
+            const statusPlaceholder = document.getElementById('systemStatus')
+            let statusItems =
+                status.forEach(item => {
+                    const statusWrapper = document.createElement('div');
+                    statusWrapper.style.padding = '0.5rem';
+                    statusWrapper.style.marginBottom = '30px';
+                    statusWrapper.style.backgroundColor = item.down === false ?
+                        'rgb(199, 246, 233)' : 'rgb(254, 215, 207)';
+                    statusWrapper.style.color = item.down === false ? 'rgb(24, 154, 119)' :
+                        '#FF3A0F';
+                    statusWrapper.style.borderLeft = item.down === false ?
+                        '6px solid rgb(24, 154, 119)' : '6px solid #FF3A0F';
+                    const statusHeading = document.createElement('h4');
+                    statusHeading.style.marginBottom = '1.5rem';
+                    statusHeading.innerText = item.alias;
+                    statusWrapper.appendChild(statusHeading);
+                    const status = document.createElement('p');
+                    status.style.fontWeight = 500;
+                    status.style.margin = 0;
+                    status.innerHTML =
+                        `<strong>Status:</strong> ${item.down === false ? 'Up' : 'Down'} <strong>Uptime:</strong> ${Math.floor(item.uptime)}`
+                    statusWrapper.appendChild(status)
+                })
+            statusPlaceholder.innerHTML = statusItems
+        })
+</script>
